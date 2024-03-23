@@ -48,12 +48,10 @@ async function GetCountries(_name = '', _carSide = '', _continent = '', _populat
     return _GetCountries()
     .then(data => {
 
-        console.log("request!");
-
         let name = _name ? _name : '';
-        let carSide = _carSide.toUpperCase() != 'BOTH' ? _carSide : '';
+        let carSide = _carSide.toUpperCase() !== 'BOTH' ? _carSide : '';
         let continent = _continent ? 
-                            (_continent.split('').map((c, index, array) => c = (!index || array[index-1] == ' ') ? c.toUpperCase() : 
+                            (_continent.split('').map((c, index, array) => c = (!index || array[index-1] === ' ') ? c.toUpperCase() : 
                             c.toLowerCase())).join('') : ''; // Capitalizzo ogni parola di una frase
         let populationMax = _populationMax ? _populationMax : '';
         let populationMin = _populationMin ? _populationMin : '';
@@ -62,13 +60,14 @@ async function GetCountries(_name = '', _carSide = '', _continent = '', _populat
         return MakeResponseJsonMessage(1, '', data.filter(country => {
 
             return (country.name.common.toUpperCase().includes(name.toUpperCase()) &&
-                    ((!carSide) || (country.car.side.toUpperCase() == carSide.toUpperCase())) &&
-                    ((!continent) || (country.continents.includes(continent))) &&
+                    ((!carSide) || (country.car.side.toUpperCase() === carSide.toUpperCase())) &&
+                    ((!continent) || (country.continents.filter(ele => ele.toUpperCase().includes(continent.toUpperCase())).length > 0)) &&
                     ((!populationMax) || (country.population <= parseInt(populationMax))) &&
                     ((!populationMin) || (country.population >= parseInt(populationMin))) &&
                     ((!currencies) || (Object.getOwnPropertyNames(country.currencies).filter((currency) => currencies.includes(currency)).length > 0)))
 
         }))
+
     })
     .catch(err => MakeResponseJsonMessage(0, err));
 
@@ -89,8 +88,10 @@ async function GetWorldCurrencies(){
                     label: currency,
                     symbol: country.currencies[currency].symbol ? country.currencies[currency].symbol : 'n.a.'
                 };
+                
+                console.log(c);
 
-                if(_currencies.filter(ele => ele.label == c.label) == 0) _currencies.push(c);
+                if(_currencies.filter(ele => ele.label === c.label).length === 0) _currencies.push(c);
 
             })
         });

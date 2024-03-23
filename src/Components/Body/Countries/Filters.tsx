@@ -49,7 +49,7 @@ export default function Filters({ handleFiltersChange }:{ handleFiltersChange: (
                         <IonButtons slot="end">
                             <IonButton 
                                 onClick={() => setIsOpen(false)}>
-                                Close
+                                Confirm
                             </IonButton>
                         </IonButtons>
                     </IonToolbar>

@@ -1,4 +1,4 @@
-import { IonApp, setupIonicReact } from '@ionic/react';
+import { IonApp, IonNav, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,10 +23,12 @@ setupIonicReact();
 
 function App() {
   return (
-    <IonApp>
-      <Header />
-      <Body />
-    </IonApp>
+    <IonNav root={() => 
+      <IonApp>
+        <Header />
+        <Body />
+      </IonApp>
+    }></IonNav>
   );
 }
 

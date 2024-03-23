@@ -33,6 +33,7 @@ export default function FormFilters({ handleFiltersChange, _name, _carSide, _con
     useEffect(() => {
         CountryModule.GetWorldCurrencies()
         .then((data: { jsonObject: { object: iCurrency[]; }; }) => {
+            console.log(data.jsonObject.object);
             setCurrencies(data.jsonObject.object.sort((a:iCurrency, b:iCurrency) => (a.label > b.label) ? 1 : -1))
         })
         .catch((err: any) => setCurrencies([]))

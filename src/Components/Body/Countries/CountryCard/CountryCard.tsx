@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonLabel, IonList } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonItem, IonLabel, IonList } from '@ionic/react';
 
 export interface iCountry{
     commonName:string,
@@ -10,7 +10,9 @@ export interface iCountry{
     area:number,
     population:number,
     continent:string,
-    capital:string
+    capital:string,
+    cca3:string,
+    rowObj:any
 }
 
 function CountryCard(country:iCountry) {
@@ -37,7 +39,7 @@ function CountryCard(country:iCountry) {
                     </IonItem>
                     <IonItem>
                         <IonLabel><b>population:</b></IonLabel>
-                        <IonLabel>{Math.round(country.population * Math.pow(10, -4)) / 100} mln</IonLabel>
+                        <IonLabel>{(country.population > Math.pow(10, 6)) ? Math.round(country.population * Math.pow(10, -4)) / 100 : country.population} {(country.population > Math.pow(10, 6)) ? "mln" : ""}</IonLabel>
                     </IonItem>
                     <IonItem>
                         <IonLabel><b>Continent:</b></IonLabel>
